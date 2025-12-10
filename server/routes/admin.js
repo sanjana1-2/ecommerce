@@ -161,10 +161,12 @@ router.post('/seed', async (req, res) => {
 
     await Product.insertMany(products);
 
-    // Create admin users including Sanjana
+    // Create admin users - Use environment variables for credentials
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@shopkart.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'changeThisPassword123!';
+    
     const users = await User.create([
-      { name: 'Admin', email: 'admin@shopkart.com', password: 'admin123', role: 'admin' },
-      { name: 'Sanjana', email: 'sanjana@gmail.com', password: '2342', role: 'admin' }
+      { name: 'Admin', email: adminEmail, password: adminPassword, role: 'admin' }
     ]);
 
     const [adminUser, sanjanaUser] = users;
